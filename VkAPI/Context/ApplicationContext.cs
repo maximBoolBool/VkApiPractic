@@ -13,7 +13,13 @@ public class ApplicationContext : DbContext
     {
         Database.EnsureCreated();
     }
-
+    
+    public ApplicationContext(DbContextOptions<ApplicationContext> options,string testString) : base(options)
+    {
+        Database.EnsureDeleted();
+        Database.EnsureCreated();
+    }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<UserGroup>().HasData(

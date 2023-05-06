@@ -43,12 +43,12 @@ public class UserService : IUserService
 
     public async Task<bool> DeleteUserAsync(string login)
     {
-        User? deleteUser = await db.Users.FirstOrDefaultAsync();
+        User? deleteUser = await db.Users.FirstOrDefaultAsync(u => u.Login.Equals(login));
 
         if (deleteUser is null)
             return false;
 
-        deleteUser.UserStateId = 2;
+        deleteUser.UserStateId = db.UserStates.First(us => us.Code.Equals(StateEnum.Deactive)).Id;
         
         db.Update(deleteUser);
         
@@ -86,6 +86,4 @@ public class UserService : IUserService
             };
         return await responseList.ToListAsync();
     }
-    
-    
 }
