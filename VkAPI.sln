@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkAPI", "VkAPI\VkAPI.csproj", "{5BFC7F8E-6B03-4BB8-8578-B5D18DA5F9FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkApiTests", "VkApiTests\VkApiTests.csproj", "{6FBF27C6-EC13-406B-8CD1-12B2A0F5FD2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{5BFC7F8E-6B03-4BB8-8578-B5D18DA5F9FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BFC7F8E-6B03-4BB8-8578-B5D18DA5F9FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BFC7F8E-6B03-4BB8-8578-B5D18DA5F9FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FBF27C6-EC13-406B-8CD1-12B2A0F5FD2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FBF27C6-EC13-406B-8CD1-12B2A0F5FD2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FBF27C6-EC13-406B-8CD1-12B2A0F5FD2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FBF27C6-EC13-406B-8CD1-12B2A0F5FD2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

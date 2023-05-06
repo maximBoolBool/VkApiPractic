@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VkAPI.Models;
-
 namespace VkAPI.Services.UserService;
 
 public class UserService : IUserService
@@ -30,10 +29,15 @@ public class UserService : IUserService
             Login = newUser.Login,
             Password = newUser.Password,
             CreatedDate = DateOnly.FromDateTime(DateTime.Today),
-            UserGroupId = (newUser.UserGroup.Equals("User"))? 2:1,
-            UserStateId = 1,
+            UserGroupId = (newUser.UserGroup.Equals("User"))? 
+                db.UserGroups.First(ug => ug.Code.Equals(GroupEnum.User)).Id : 
+                db.UserGroups.First(ug => ug.Code.Equals(GroupEnum.Admin)).Id,
+            UserStateId = db.UserStates.First(us => us.Code.Equals(StateEnum.Active)).Id,
         });
         await db.SaveChangesAsync();
+        
+        
+        
         return true;
     }
 
@@ -55,7 +59,7 @@ public class UserService : IUserService
     
     public async Task<User?> GetUserAsync(string login)
     {
-        User? responseUser = await db.Users.FirstAsync( u => u.Login.Equals(login));
+        User? responseUser = await db.Users.FirstOrDefaultAsync( u => u.Login.Equals(login));
 
         return responseUser;
     }
@@ -65,4 +69,23 @@ public class UserService : IUserService
         List<User>? users = await db.Users.ToListAsync();
         return users;
     }
+
+    public async Task<List<DtoUser>> GetFullUserInfoAsync()
+    {
+        var responseList = from user in db.Users
+            join userGroup in db.UserGroups on user.UserGroupId equals userGroup.Id
+            join userState in db.UserStates on user.UserStateId equals userState.Id
+            select new DtoUser()
+            {
+                Id = user.Id,
+                Login = user.Login,
+                Password = user.Password,
+                CreateDate = user.CreatedDate,
+                UserGroup = userGroup.Code.ToString(),
+                UserState = userState.Code.ToString(),
+            };
+        return await responseList.ToListAsync();
+    }
+    
+    
 }

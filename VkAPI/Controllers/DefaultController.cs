@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using VkAPI.Models;
 using VkAPI.Services.UserService;
 
@@ -19,7 +20,6 @@ public class DefaultController : Controller
     [Route("AddNewUser")]
     public async Task<IActionResult> AddNewUser(DtoUser newUser)
     {
-        Console.WriteLine($"{newUser.Login}---{newUser.Password}---{newUser.UserGroup}");
         bool flag = await userWorker.AddNewUserAsync(newUser);
         return Json(new {Response = flag});
     }
@@ -39,7 +39,7 @@ public class DefaultController : Controller
     public async Task<IActionResult> GetUser(string login)
     {
         User? user = await userWorker.GetUserAsync(login);
-        return Json(new { Response = user });
+        return Json( new {Response = user} );
     }
 
     //check
@@ -48,11 +48,16 @@ public class DefaultController : Controller
     public async Task<IActionResult> GetAllUser()
     {
         List<User> users = await userWorker.GetAllUsersAsync();
-        foreach (var VARIABLE in users)
-        {
-            Console.WriteLine($"{VARIABLE.Login}--{VARIABLE.Password}");
-        }
-
         return Json(users);
     }
+
+    //check
+    [HttpGet]
+    [Route("GetFullUserInfo")]
+    public async Task<IActionResult> GetFullUserInfo()
+    {
+        var responseList = await userWorker.GetFullUserInfoAsync();
+        return Json(responseList);
+    }
+
 }

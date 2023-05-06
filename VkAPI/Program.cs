@@ -8,12 +8,7 @@ string? connectionString = builder.Configuration.GetConnectionString("DefaultCon
 builder.Services.AddDbContext<ApplicationContext>(opt=>opt.UseNpgsql(connectionString));
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddControllers();
-
-
-
 var app = builder.Build();
-
-
 app.MapControllers();
 app.Run();
 
