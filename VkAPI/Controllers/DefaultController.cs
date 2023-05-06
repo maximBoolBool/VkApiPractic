@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using VkAPI.Models;
 using VkAPI.Services.UserService;
-
 namespace VkAPI.Controllers;
 
 public class DefaultController : Controller
@@ -53,11 +52,18 @@ public class DefaultController : Controller
 
     //check
     [HttpGet]
-    [Route("GetFullUserInfo")]
-    public async Task<IActionResult> GetFullUserInfo()
+    [Route("GetFullAllUserInfo")]
+    public async Task<IActionResult> GetFullAllUserInfo()
     {
-        var responseList = await userWorker.GetFullUserInfoAsync();
+        var responseList = await userWorker.GetFullAllUserInfoAsync();
         return Json(responseList);
     }
 
+    [HttpPost]
+    [Route("GetFullUserInfo")]
+    public async Task<IActionResult> GetFullUserInfo(string login)
+    {
+        var responseUser = await userWorker.GetFullUserAsync(login);
+        return Json(responseUser);
+    }
 }

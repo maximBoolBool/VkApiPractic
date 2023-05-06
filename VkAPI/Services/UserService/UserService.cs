@@ -70,7 +70,7 @@ public class UserService : IUserService
         return users;
     }
 
-    public async Task<List<DtoUser>> GetFullUserInfoAsync()
+    public async Task<List<DtoUser>> GetFullAllUserInfoAsync()
     {
         var responseList = from user in db.Users
             join userGroup in db.UserGroups on user.UserGroupId equals userGroup.Id
@@ -85,5 +85,25 @@ public class UserService : IUserService
                 UserState = userState.Code.ToString(),
             };
         return await responseList.ToListAsync();
+    }
+
+    public async Task<DtoUser?> GetFullUserAsync(string login)
+    {
+        User? buff = await db.Users.FirstOrDefaultAsync(u => u.Login.Equals(login));
+        
+        if (buff is null)
+            return null;
+
+        DtoUser response = new DtoUser()
+        {
+            Id = buff.Id,
+            Login = buff.Login,
+            Password = buff.Login,
+            CreateDate = buff.CreatedDate,
+            UserGroup = db.UserGroups.FirstOrDefault( ug => ug.Id.Equals(buff.UserGroupId)).Code.ToString(),
+            UserState =  db.UserStates.FirstOrDefault(us => us.Id.Equals(buff.UserStateId)).Code.ToString()
+        };
+
+        return response;
     }
 }

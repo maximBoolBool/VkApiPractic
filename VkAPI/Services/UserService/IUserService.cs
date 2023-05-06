@@ -9,5 +9,6 @@ public interface IUserService
     public Task<bool> DeleteUserAsync(string login);
     public Task<User> GetUserAsync(string login);
     public Task<List<User>> GetAllUsersAsync();
-    public Task<List<DtoUser>> GetFullUserInfoAsync();
+    public Task<List<DtoUser>> GetFullAllUserInfoAsync();
+    public Task<DtoUser> GetFullUserAsync(string login);
 }
