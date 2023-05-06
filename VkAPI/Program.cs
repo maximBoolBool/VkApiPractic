@@ -1,14 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 using VkAPI;
+using VkAPI.Services.UserService;
 
 var builder = WebApplication.CreateBuilder();
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-builder.Services.AddDbContext<ApplicationContext>(opt=> opt.UseNpgsql(connectionString));
+builder.Services.AddDbContext<ApplicationContext>(opt=>opt.UseNpgsql(connectionString));
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddControllers();
-builder.Services.AddCors();
+
 
 
 var app = builder.Build();
+
+
+app.MapControllers();
+app.Run();
 

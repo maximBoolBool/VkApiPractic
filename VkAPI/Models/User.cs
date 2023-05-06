@@ -2,7 +2,7 @@
 
 namespace VkAPI.Models;
 
-[Table("user")]
+[Table("User")]
 public class User
 {
     [Column("id")]

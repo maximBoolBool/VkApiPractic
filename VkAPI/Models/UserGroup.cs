@@ -2,12 +2,13 @@
 
 namespace VkAPI.Models;
 
+[Table("user_group")]
 public class UserGroup
 {
     [Column("id")]
     public int Id { get; set; }
     [Column("code")]
-    public string Code { get; set; }
+    public GroupEnum Code { get; set; }
     [Column("description")]
     public string Description { get; set; }
 

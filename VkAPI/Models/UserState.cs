@@ -2,12 +2,13 @@
 
 namespace VkAPI.Models;
 
+[Table("user_state")]
 public class UserState
 {
     [Column("id")]
     public int Id { get; set; }
     [Column("code")]
-    public string Code { get; set; }
+    public StateEnum Code { get; set; }
     [Column("description")]
     public string Description { get; set; }
     
