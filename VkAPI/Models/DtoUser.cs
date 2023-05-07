@@ -8,4 +8,5 @@ public class DtoUser
     public DateOnly? CreateDate { get; set; }
     public string UserGroup { get; set; }
     public string? UserState { get; set; }
+    
 }
