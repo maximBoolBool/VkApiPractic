@@ -59,14 +59,54 @@ public class UserService : IUserService
     
     public async Task<User?> GetUserAsync(string login)
     {
-        User? responseUser = await db.Users.FirstOrDefaultAsync( u => u.Login.Equals(login));
+        User? responseUser = await db.Users
+            .Include(u=> u.UserState)
+            .Include(u => u.UserGroup)
+            .FirstOrDefaultAsync( u => u.Login.Equals(login));
 
+        if (responseUser is null)
+            return null;
+        
+        responseUser.UserGroup = new UserGroup()
+        {
+            Id = responseUser.UserGroup.Id,
+            Code = responseUser.UserGroup.Code,
+            Description = responseUser.UserGroup.Description,
+        };
+
+        responseUser.UserState = new UserState()
+        {
+            Id = responseUser.UserState.Id,
+            Code = responseUser.UserState.Code,
+            Description = responseUser.UserState.Description,
+        };
+        
         return responseUser;
     }
 
     public async Task<List<User>> GetAllUsersAsync()
     {
-        List<User>? users = await db.Users.ToListAsync();
+        List<User>? users = await db.Users.Select(p => new User()
+        {
+            Id = p.Id,
+            Login = p.Login,
+            Password = p.Password,
+            CreatedDate = p.CreatedDate,
+            UserGroupId = p.UserGroupId,
+            UserStateId = p.UserStateId,
+            UserGroup = new UserGroup()
+            {
+                Id = p.UserGroup.Id,
+                Code = p.UserGroup.Code,
+                Description = p.UserGroup.Description
+            },
+            UserState = new UserState()
+            {
+                Id = p.UserState.Id,
+                Code = p.UserState.Code,
+                Description = p.UserState.Description
+            }
+        }).ToListAsync();
         return users;
     }
 
