@@ -1,4 +1,4 @@
-﻿﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using VkAPI.Models;
 namespace VkAPI.Services.UserService;
 
@@ -20,7 +20,7 @@ public class UserService : IUserService
 
         if (newUser.UserGroup.Equals(GroupEnum.Admin.ToString()))
         {
-            User? checkAdminUser = await db.Users.FirstOrDefaultAsync(u => u.UserGroupId.Equals(1));
+            User? checkAdminUser = await db.Users.FirstOrDefaultAsync(u => u.UserGroup.Code.Equals(GroupEnum.Admin));
             if (checkAdminUser is not null)
                 return false;
         }
@@ -35,9 +35,6 @@ public class UserService : IUserService
             UserStateId = db.UserStates.First(us => us.Code.Equals(StateEnum.Active)).Id,
         });
         await db.SaveChangesAsync();
-        
-        
-        
         return true;
     }
 

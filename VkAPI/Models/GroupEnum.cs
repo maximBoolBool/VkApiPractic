@@ -2,6 +2,7 @@
 
 namespace VkAPI.Models;
 
+[Serializable]
 public enum GroupEnum
 {
     Admin,
