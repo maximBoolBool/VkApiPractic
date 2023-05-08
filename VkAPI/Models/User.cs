@@ -19,7 +19,7 @@ public class User
     public int UserStateId { get; set; }
     
     [ForeignKey("UserGroupId")]
-    public UserGroup userGroup { get; set; }
+    public UserGroup UserGroup { get; set; }
     [ForeignKey("UserStateId")]
     public UserState UserState { get; set; }
 }
